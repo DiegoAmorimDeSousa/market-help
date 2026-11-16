@@ -25,6 +25,11 @@ mkdir -p "$HOME/.termux/boot"
 cp deploy/termux/start.sh "$HOME/.termux/boot/market-help.sh"
 chmod +x "$HOME/.termux/boot/market-help.sh" deploy/termux/*.sh
 
+echo "==> Ligando o robô sempre que o Termux for aberto"
+BASHRC_LINE='bash ~/market-help/deploy/termux/start.sh  # market-help'
+touch "$HOME/.bashrc"
+grep -qF "# market-help" "$HOME/.bashrc" || echo "$BASHRC_LINE" >> "$HOME/.bashrc"
+
 echo "==> (Re)iniciando o robô"
 pkill -f "python -m market_help" 2>/dev/null || true  # o loop reinicia com o código novo
 bash deploy/termux/start.sh
